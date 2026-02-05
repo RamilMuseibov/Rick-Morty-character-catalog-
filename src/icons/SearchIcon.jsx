@@ -1,4 +1,4 @@
-export default function ReloadIcon({ className }) {
+export default function SearchIcon({ className }) {
   return (
     <svg
       className={className}
@@ -7,13 +7,13 @@ export default function ReloadIcon({ className }) {
       height="18"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke="#868686"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-      <path d="M3 3v5h5" />
+      <path d="m21 21-4.34-4.34" />
+      <circle cx="11" cy="11" r="8" />
     </svg>
   );
 }
