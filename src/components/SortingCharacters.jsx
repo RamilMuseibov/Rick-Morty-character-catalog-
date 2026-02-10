@@ -2,7 +2,17 @@ import styles from "../styles/character-catalog.module.css";
 import { SelectItem } from "./SelectItem";
 import StarIcon from "../icons/StarIcon";
 
-export default function SortingCharacters({ characters }) {
+export default function SortingCharacters({
+  characters,
+  statusFilter,
+  setStatusFilter,
+  genderFilter,
+  setGenderFilter,
+  speciesFilter,
+  setSpeciesFilter,
+  sorting,
+  setSorting,
+}) {
   const statusOptions = [
     "All status",
     ...Array.from(new Set(characters.map((character) => character.status))),
@@ -26,25 +36,29 @@ export default function SortingCharacters({ characters }) {
         id={1}
         className={styles["select_sorting-characters"]}
         options={statusOptions}
-        value={"All status"}
+        value={statusFilter}
+        onChange={(e) => setStatusFilter(e.target.value)}
       />
       <SelectItem
         id={2}
         className={styles["select_sorting-characters"]}
         options={genderOptions}
-        value={"All genders"}
+        value={genderFilter}
+        onChange={(e) => setGenderFilter(e.target.value)}
       />
       <SelectItem
         id={3}
         className={styles["select_sorting-characters"]}
         options={speciesOptions}
-        value={"All species"}
+        value={speciesFilter}
+        onChange={(e) => setSpeciesFilter(e.target.value)}
       />
       <SelectItem
         id={4}
         className={styles["select_sorting-characters"]}
         options={sortingOptions}
-        value={"Sorting"}
+        value={sorting}
+        onChange={(e) => setSorting(e.target.value)}
       />
 
       <button className={styles["btn-favorites"]}>
