@@ -11,6 +11,11 @@ export default function RickMortyCharacterCatalog() {
   const [favoritesCharacters, setFavoritesCharacters] = useState([]);
   const [page, setPage] = useState(1);
 
+  const [statusFilter, setStatusFilter] = useState("All status");
+  const [genderFilter, setGenderFilter] = useState("All gender");
+  const [speciesFilter, setSpeciesFilter] = useState("All species");
+  const [sorting, setSorting] = useState("Without sorting");
+
   useEffect(() => {
     async function getCharacters() {
       const urls = [
@@ -30,6 +35,24 @@ export default function RickMortyCharacterCatalog() {
     getCharacters();
   }, []);
 
+  const filteredCharacters = characters
+    .filter((char) =>
+      statusFilter === "All status" ? true : char.status === statusFilter,
+    )
+    .filter((char) =>
+      genderFilter === "All gender" ? true : char.gender === genderFilter,
+    )
+    .filter((char) =>
+      speciesFilter === "All species" ? true : char.species === speciesFilter,
+    )
+    .sort((a, b) =>
+      sorting === "Without sorting"
+        ? 0
+        : sorting === "Name A-Z"
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name),
+    );
+
   return (
     <div className={styles[`app_character-catalog`]}>
       <header className={styles["app_header"]}>
@@ -46,9 +69,19 @@ export default function RickMortyCharacterCatalog() {
 
         <SearchCharacters />
 
-        <SortingCharacters characters={characters} />
+        <SortingCharacters
+          characters={characters}
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+          genderFilter={genderFilter}
+          setGenderFilter={setGenderFilter}
+          speciesFilter={speciesFilter}
+          setSpeciesFilter={setSpeciesFilter}
+          sorting={sorting}
+          setSorting={setSorting}
+        />
 
-        <CharactersCard characters={characters} />
+        <CharactersCard characters={filteredCharacters} />
       </main>
     </div>
   );
