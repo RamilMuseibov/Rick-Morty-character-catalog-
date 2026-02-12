@@ -10,6 +10,7 @@ export default function RickMortyCharacterCatalog() {
   const [info, setInfo] = useState(null);
   const [favoritesCharacters, setFavoritesCharacters] = useState([]);
   const [page, setPage] = useState(1);
+  const [isActive, setIsActive] = useState(false);
 
   const [statusFilter, setStatusFilter] = useState("All status");
   const [genderFilter, setGenderFilter] = useState("All gender");
@@ -53,6 +54,17 @@ export default function RickMortyCharacterCatalog() {
           : b.name.localeCompare(a.name),
     );
 
+  function handleFavoriteClick(id) {
+    const isFavorite = favoritesCharacters.some((favChar) => favChar.id === id);
+
+    if (isFavorite) {
+      setFavoritesCharacters(favoritesCharacters.filter((favChar) => favChar.id !== id));
+    } else {
+      const favChar = filteredCharacters.find((favChar) => favChar.id === id);
+      setFavoritesCharacters([...favoritesCharacters, favChar]);
+    }
+  }
+
   return (
     <div className={styles[`app_character-catalog`]}>
       <header className={styles["app_header"]}>
@@ -81,7 +93,12 @@ export default function RickMortyCharacterCatalog() {
           setSorting={setSorting}
         />
 
-        <CharactersCard characters={filteredCharacters} />
+        <CharactersCard
+          isActive={isActive}
+          handleFavoriteClick={handleFavoriteClick}
+          characters={filteredCharacters}
+          favoritesCharacters={favoritesCharacters}
+        />
       </main>
     </div>
   );
