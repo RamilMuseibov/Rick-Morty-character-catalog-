@@ -202,14 +202,6 @@
   &:hover .icon-favorites {
     color: #57cb60;
   }
-
-  &:focus {
-    background-color: #57cb60;
-  }
-
-  &:focus .icon-favorites {
-    color: #fff;
-  }
 }
 
 .characters-catalog {
@@ -268,6 +260,10 @@
 
 .character-card_icon-favorites {
   width: 20px;
+}
+
+.character-card_icon-favorites-active {
+  color: #57cb60;
 }
 
 .character-card_status-alive {
