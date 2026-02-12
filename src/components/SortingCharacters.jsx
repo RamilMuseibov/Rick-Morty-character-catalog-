@@ -1,6 +1,7 @@
 import styles from "../styles/character-catalog.module.css";
 import { SelectItem } from "./SelectItem";
 import StarIcon from "../icons/StarIcon";
+import Button from "./Button";
 
 export default function SortingCharacters({
   characters,
@@ -61,10 +62,13 @@ export default function SortingCharacters({
         onChange={(e) => setSorting(e.target.value)}
       />
 
-      <button className={styles["btn-favorites"]}>
-        <StarIcon className={styles["icon-favorites"]} />
+      <Button
+        btnClassName={styles["btn-favorites"]}
+        Icon={StarIcon}
+        iconClassName={styles["icon-favorites"]}
+      >
         Favorites
-      </button>
+      </Button>
     </div>
   );
 }
