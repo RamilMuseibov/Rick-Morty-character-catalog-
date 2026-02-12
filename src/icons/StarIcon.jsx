@@ -1,4 +1,4 @@
-export default function Star({ className, color }) {
+export default function Star({ className, color, colorFilled, filled }) {
   return (
     <svg
       className={className}
@@ -6,7 +6,7 @@ export default function Star({ className, color }) {
       width="20"
       height="20"
       viewBox="0 0 24 24"
-      fill="none"
+      fill={filled ? colorFilled : "none"}
       stroke={color || "currentColor"}
       strokeWidth="2"
       strokeLinecap="round"
