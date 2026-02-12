@@ -1,6 +1,13 @@
 import styles from "../styles/character-catalog.module.css";
 
-export function StatItem({ className, labelClassName, Icon, total, label, color }) {
+export default function StatItem({
+  className,
+  labelClassName,
+  Icon,
+  total,
+  label,
+  color,
+}) {
   return (
     <div className={className}>
       <Icon className={styles["icon"]} color={color} />

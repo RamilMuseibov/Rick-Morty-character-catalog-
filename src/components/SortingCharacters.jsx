@@ -1,5 +1,5 @@
 import styles from "../styles/character-catalog.module.css";
-import { SelectItem } from "./SelectItem";
+import SelectItem from "./SelectItem";
 import StarIcon from "../icons/StarIcon";
 import Button from "./Button";
 

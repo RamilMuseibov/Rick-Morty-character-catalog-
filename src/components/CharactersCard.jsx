@@ -2,7 +2,7 @@ import styles from "../styles/character-catalog.module.css";
 import StarIcon from "../icons/StarIcon";
 import Button from "./Button";
 
-export function CharactersCard({
+export default function CharactersCard({
   characters,
   handleFavoriteClick,
   isActive,

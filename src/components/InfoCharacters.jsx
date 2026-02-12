@@ -1,4 +1,4 @@
-import { StatItem } from "./StatItem";
+import StatItem from "./StatItem";
 import HumansIcon from "../icons/HumansIcon";
 import EyeIcon from "../icons/EyeIcon";
 import StarIcon from "../icons/StarIcon";
