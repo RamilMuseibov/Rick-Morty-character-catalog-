@@ -1,18 +1,37 @@
 import styles from "../styles/character-catalog.module.css";
 import StarIcon from "../icons/StarIcon";
+import Button from "./Button";
 
-export function CharactersCard({ characters }) {
+export function CharactersCard({
+  characters,
+  handleFavoriteClick,
+  isActive,
+  setIsActive,
+  favoritesCharacters,
+}) {
   return (
     <div className={styles["characters-catalog"]}>
       {characters?.map((character) => {
         const status = character.status.toLowerCase();
+        const isFavorite = favoritesCharacters.some(
+          (favChar) => favChar.id === character.id,
+        );
 
         return (
           <div key={character.id} className={styles["characters-card"]}>
             <img className={styles["character-card-image"]} src={character.image} />
-            <button className={styles["character-card_btn-favorites"]}>
-              <StarIcon className={styles["character-card_icon-favorites"]} />
-            </button>
+
+            <Button
+              btnClassName={styles["character-card_btn-favorites"]}
+              Icon={StarIcon}
+              iconClassName={
+                isFavorite
+                  ? styles["character-card_icon-favorites-active"]
+                  : styles["character-card_icon-favorites"]
+              }
+              iconProps={{ filled: isFavorite, colorFilled: "#57cb60" }}
+              onClick={() => handleFavoriteClick(character.id)}
+            />
 
             <span
               className={
