@@ -1,6 +1,7 @@
 import ReloadIcon from "../icons/ReloadIcon";
 import SearchIcon from "../icons/SearchIcon";
 import styles from "../styles/character-catalog.module.css";
+import Button from "./Button";
 
 export default function SearchCharacters() {
   return (
@@ -13,9 +14,8 @@ export default function SearchCharacters() {
           placeholder="Search by name or type..."
         />
       </div>
-      <button className={styles["reset-icon"]}>
-        <ReloadIcon />
-      </button>
+
+      <Button btnClassName={styles["reset-icon"]} Icon={ReloadIcon} />
     </div>
   );
 }
