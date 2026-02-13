@@ -6,6 +6,7 @@ export default function CharactersCard({
   characters,
   handleFavoriteClick,
   favoritesCharacters,
+  handleActiveCard,
 }) {
   return (
     <div className={styles["characters-catalog"]}>
@@ -19,7 +20,11 @@ export default function CharactersCard({
           );
 
           return (
-            <div key={character.id} className={styles["characters-card"]}>
+            <div
+              onClick={() => handleActiveCard(character.id)}
+              key={character.id}
+              className={styles["characters-card"]}
+            >
               <img className={styles["character-card-image"]} src={character.image} />
 
               <Button
@@ -31,7 +36,10 @@ export default function CharactersCard({
                     : styles["character-card_icon-favorites"]
                 }
                 iconProps={{ filled: isFavorite, colorFilled: "#57cb60" }}
-                onClick={() => handleFavoriteClick(character.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleFavoriteClick(character.id);
+                }}
               />
 
               <span
