@@ -10,6 +10,7 @@ export default function RickMortyCharacterCatalog() {
   const [info, setInfo] = useState(null);
   const [favoritesCharacters, setFavoritesCharacters] = useState([]);
   const [page, setPage] = useState(1);
+  const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
 
   const [statusFilter, setStatusFilter] = useState("All status");
@@ -20,13 +21,13 @@ export default function RickMortyCharacterCatalog() {
   useEffect(() => {
     async function getCharacters() {
       const urls = [
-        `https://rickandmortyapi.com/api/character?page=${page}`,
-        `https://rickandmortyapi.com/api/character?page=${page + 1}`,
+        `https://rickandmortyapi.com/api/character?page=${page}&name=${name}`,
+        `https://rickandmortyapi.com/api/character?page=${page + 1}&name=${name}`,
       ];
 
       const responses = await Promise.all(urls.map((url) => fetch(url)));
       const data = await Promise.all(responses.map((res) => res.json()));
-      const allCharacters = data.flatMap((page) => page.results);
+      const allCharacters = data.flatMap((page) => (page.results ? page.results : []));
       const allInfo = data[0].info;
 
       setCharacters(allCharacters);
@@ -34,7 +35,7 @@ export default function RickMortyCharacterCatalog() {
     }
 
     getCharacters();
-  }, []);
+  }, [name]);
 
   const filteredCharacters = characters
     .filter((char) =>
@@ -65,6 +66,12 @@ export default function RickMortyCharacterCatalog() {
     }
   }
 
+  function handleCharSearch(e) {
+    setName(e.target.value);
+  }
+
+  console.log(name);
+
   return (
     <div className={styles[`app_character-catalog`]}>
       <header className={styles["app_header"]}>
@@ -79,7 +86,7 @@ export default function RickMortyCharacterCatalog() {
           info={info}
         />
 
-        <SearchCharacters />
+        <SearchCharacters onChange={handleCharSearch} value={name} />
 
         <SortingCharacters
           characters={characters}
