@@ -1,4 +1,4 @@
-export default function Eye({ className }) {
+export default function EyeIcon({ className }) {
   return (
     <svg
       className={className}

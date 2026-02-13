@@ -1,4 +1,4 @@
-export default function Humans({ className }) {
+export default function HumansIcon({ className }) {
   return (
     <svg
       className={className}

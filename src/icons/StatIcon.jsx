@@ -1,4 +1,4 @@
-export default function Stat({ className }) {
+export default function StatIcon({ className }) {
   return (
     <svg
       className={className}

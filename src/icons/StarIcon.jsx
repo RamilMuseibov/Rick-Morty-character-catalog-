@@ -1,4 +1,4 @@
-export default function Star({ className, color, colorFilled, filled }) {
+export default function StarIcon({ className, color, colorFilled, filled }) {
   return (
     <svg
       className={className}
