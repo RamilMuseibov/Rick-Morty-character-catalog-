@@ -1,4 +1,8 @@
 .app_character-catalog {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
   margin: 0;
   padding: 0;
 }
@@ -22,6 +26,16 @@
 }
 
 .app_main-container {
+  position: relative;
+  margin: 0 auto 0 300px;
+  max-width: 1550px;
+  padding: 120px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.app_main-container-active-card-hidden {
+  position: relative;
   margin: 0 auto;
   max-width: 1550px;
   padding: 120px 20px 20px 20px;
@@ -191,9 +205,9 @@
   background: transparent;
   border: 1px solid #6161617c;
   border-radius: 7px;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
     border-color: #57cb60;
     outline: none;
     box-shadow: 0 0 15px rgba(87, 203, 96, 0.5);
@@ -202,6 +216,18 @@
   &:hover .icon-favorites {
     color: #57cb60;
   }
+}
+
+.btn-favorites-active {
+  position: relative;
+  padding: 10px 10px 10px 40px;
+  font-weight: 700;
+  font-size: 17px;
+  background: transparent;
+  border: 1px solid #6161617c;
+  border-radius: 7px;
+  cursor: pointer;
+  background-color: #57cb60;
 }
 
 .characters-catalog {
@@ -322,4 +348,211 @@
   padding: 60px 0 0 15px;
   color: #949494;
   font-size: 14px;
+}
+
+.active-card {
+  background-color: #0a0e11;
+  border: 1px solid #6161617c;
+
+  padding: 0 15px 15px 15px;
+  position: absolute;
+  top: 75px;
+  right: 0;
+  bottom: 0;
+}
+
+.active-card-hidden {
+  display: none;
+}
+
+.active-card_title {
+  display: flex;
+  gap: 4rem;
+  font-weight: 500;
+  border-bottom: 1px solid #6161617c;
+  margin: 15px -15px 15px -15px;
+  padding: 0 0 15px 15px;
+}
+
+.active-card_closed-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.active-card_full-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.active-card-image {
+  width: 320px;
+  height: 320px;
+  border-radius: 7px;
+}
+
+.active-card_name {
+  padding: 35px 0 0 0;
+  color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.active-card_species {
+  font-size: 17px;
+  color: #949494;
+}
+
+.active-card_gender-container {
+  align-items: center;
+  margin: 20px 0 0 0;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.active-card_gender-icon {
+  width: 20px;
+  height: 20px;
+  color: #949494;
+}
+
+.active-card_gender-title {
+  color: #949494;
+}
+
+.active-card_gender-subtitle {
+  color: #ffffff;
+}
+
+.active-card_planet-container {
+  align-items: center;
+  margin: 20px 0 0 0;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.active-card_planet-icon {
+  width: 20px;
+  height: 20px;
+  color: #949494;
+}
+
+.active-card_planet-title {
+  color: #949494;
+}
+
+.active-card_planet-subtitle {
+  color: #ffffff;
+}
+
+.active-card_location-container {
+  align-items: center;
+  margin: 20px 0 0 0;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.active-card_location-icon {
+  width: 20px;
+  height: 20px;
+  color: #949494;
+}
+
+.active-card_location-title {
+  color: #949494;
+}
+
+.active-card_location-subtitle {
+  color: #ffffff;
+}
+
+.active-card_episode-container {
+  align-items: center;
+  margin: 20px 0 0 0;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.active-card_episode-icon {
+  width: 20px;
+  height: 20px;
+  color: #949494;
+}
+
+.active-card_episode-title {
+  color: #949494;
+}
+
+.active-card_episode-subtitle {
+  color: #ffffff;
+}
+
+.active-card_status-container {
+  align-items: center;
+  margin: 20px 0 0 0;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.active-card_status-icon {
+  width: 20px;
+  height: 20px;
+  color: #949494;
+}
+
+.active-card_status-title {
+  color: #949494;
+}
+
+.active-card_status-subtitle {
+  color: #ffffff;
+}
+
+.pagination-container {
+  margin: 20px auto 120px auto;
+  max-width: 1550px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pagination_icon-left {
+  color: #57cb60;
+}
+
+.pagination_icon-right {
+  color: #57cb60;
+}
+
+.pagination_btn-left {
+  background: transparent;
+  border: 1px solid #6161617c;
+  border-radius: 7px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #57cb60;
+    outline: none;
+    box-shadow: 0 0 15px rgba(87, 203, 96, 0.5);
+  }
+}
+
+.pagination_btn-right {
+  background: transparent;
+  border: 1px solid #6161617c;
+  border-radius: 7px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #57cb60;
+    outline: none;
+    box-shadow: 0 0 15px rgba(87, 203, 96, 0.5);
+  }
+}
+
+.disabled-btn {
+  background: transparent;
+  border: 1px solid #6161617c;
+  border-radius: 7px;
 }
