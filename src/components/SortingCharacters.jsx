@@ -13,6 +13,10 @@ export default function SortingCharacters({
   setSpeciesFilter,
   sorting,
   setSorting,
+  onClick,
+  isActive,
+  setIsActive,
+  favoritesCharacters,
 }) {
   const statusOptions = [
     "All status",
@@ -63,9 +67,10 @@ export default function SortingCharacters({
       />
 
       <Button
-        btnClassName={styles["btn-favorites"]}
+        btnClassName={isActive ? styles["btn-favorites-active"] : styles["btn-favorites"]}
         Icon={StarIcon}
         iconClassName={styles["icon-favorites"]}
+        onClick={onClick}
       >
         Favorites
       </Button>
