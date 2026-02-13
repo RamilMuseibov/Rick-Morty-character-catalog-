@@ -19,6 +19,7 @@ export default function ActiveCard({ activeCard, handleClosedActiveCard }) {
         <Button
           Icon={ClosedIcon}
           btnClassName={styles["active-card_closed-btn"]}
+          iconClassName={styles["active-card_closed-icon"]}
           onClick={() => handleClosedActiveCard(activeCard.id)}
         />
       </h2>
