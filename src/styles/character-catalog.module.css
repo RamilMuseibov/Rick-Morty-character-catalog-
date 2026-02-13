@@ -378,6 +378,17 @@
   background: transparent;
   border: none;
   cursor: pointer;
+  transition: background-color ease-out 0.2s;
+  border-radius: 10px;
+
+  &:hover {
+    border-radius: 10px;
+    background-color: #57cb60;
+  }
+
+  &:hover .active-card_closed-icon {
+    color: #000000;
+  }
 }
 
 .active-card_full-info-container {
