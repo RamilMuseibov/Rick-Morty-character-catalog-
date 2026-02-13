@@ -5,8 +5,6 @@ import Button from "./Button";
 export default function CharactersCard({
   characters,
   handleFavoriteClick,
-  isActive,
-  setIsActive,
   favoritesCharacters,
 }) {
   return (
