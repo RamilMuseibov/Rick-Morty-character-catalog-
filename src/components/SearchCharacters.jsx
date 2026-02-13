@@ -4,7 +4,7 @@ import styles from "../styles/character-catalog.module.css";
 import Button from "./Button";
 import Input from "./Input";
 
-export default function SearchCharacters() {
+export default function SearchCharacters({ onChange, value }) {
   return (
     <div className={styles["search-container"]}>
       <div className={styles["search-field"]}>
@@ -14,6 +14,8 @@ export default function SearchCharacters() {
           type={"text"}
           className={styles["input-search"]}
           placeholder={"Search by name or type..."}
+          value={value}
+          onChange={onChange}
         />
       </div>
 
