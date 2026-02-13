@@ -15,8 +15,6 @@ export default function SortingCharacters({
   setSorting,
   onClick,
   isActive,
-  setIsActive,
-  favoritesCharacters,
 }) {
   const statusOptions = [
     "All status",
