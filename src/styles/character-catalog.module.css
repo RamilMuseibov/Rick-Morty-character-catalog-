@@ -211,6 +211,12 @@
   flex-wrap: wrap;
 }
 
+.error_characters-undefined {
+  margin: 100px auto;
+  font-size: 20px;
+  color: #929292;
+}
+
 .characters-card:hover .character-card-image {
   transform: scale(1.05);
 }
