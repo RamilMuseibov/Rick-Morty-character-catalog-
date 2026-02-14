@@ -14,7 +14,7 @@ export default function SortingCharacters({
   sorting,
   setSorting,
   onClick,
-  isActive, 
+  isActive,
 }) {
   const statusOptions = [
     "All status",
@@ -70,7 +70,7 @@ export default function SortingCharacters({
         iconClassName={styles["icon-favorites"]}
         onClick={onClick}
       >
-        Favorites
+        {isActive ? "Back to all" : "Favorites"}
       </Button>
     </div>
   );
