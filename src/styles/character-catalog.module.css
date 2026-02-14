@@ -141,7 +141,7 @@
   }
 }
 
-.reset-icon {
+.reset-btn {
   height: 35px;
   background: transparent;
   padding: 7px;
@@ -155,6 +155,14 @@
     outline: none;
     color: #000000;
   }
+}
+
+.reset-btn-disabled {
+  height: 35px;
+  background: transparent;
+  padding: 7px;
+  border: 1px solid #6161617c;
+  border-radius: 7px;
 }
 
 .search-container {
@@ -526,6 +534,10 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+}
+
+.pagination-container-hidden {
+  display: none;
 }
 
 .pagination_icon-left {
