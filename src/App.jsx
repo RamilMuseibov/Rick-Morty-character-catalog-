@@ -101,8 +101,6 @@ export default function RickMortyCharacterCatalog() {
     }
   }
 
-  console.log(activeCard);
-
   function handleShowFavChar() {
     if (!isActive) {
       setIsActive(true);
@@ -112,10 +110,16 @@ export default function RickMortyCharacterCatalog() {
   }
 
   function handleCharSearch(e) {
+    if (urlPage > 1) {
+      setUrlPage(1);
+    }
     setName(e.target.value);
   }
 
   function handleInputReset() {
+    if (urlPage > 1) {
+      setUrlPage(1);
+    }
     setName("");
   }
 
@@ -148,6 +152,7 @@ export default function RickMortyCharacterCatalog() {
         />
 
         <SearchCharacters
+          name={name}
           onChange={handleCharSearch}
           value={name}
           onClick={handleInputReset}
@@ -176,7 +181,13 @@ export default function RickMortyCharacterCatalog() {
         />
       </main>
 
-      <div className={styles["pagination-container"]}>
+      <div
+        className={
+          isActive || characters.length === 0
+            ? styles["pagination-container-hidden"]
+            : styles["pagination-container"]
+        }
+      >
         <Button
           disabled={urlPage === 1}
           btnClassName={
