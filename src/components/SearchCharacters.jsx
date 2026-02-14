@@ -4,7 +4,7 @@ import styles from "../styles/character-catalog.module.css";
 import Button from "./Button";
 import Input from "./Input";
 
-export default function SearchCharacters({ onChange, value, onClick }) {
+export default function SearchCharacters({ onChange, value, onClick, name }) {
   return (
     <div className={styles["search-container"]}>
       <div className={styles["search-field"]}>
@@ -19,7 +19,12 @@ export default function SearchCharacters({ onChange, value, onClick }) {
         />
       </div>
 
-      <Button btnClassName={styles["reset-icon"]} Icon={ReloadIcon} onClick={onClick} />
+      <Button
+        disabled={name === "" ? true : false}
+        btnClassName={name === "" ? styles["reset-btn-disabled"] : styles["reset-btn"]}
+        Icon={ReloadIcon}
+        onClick={onClick}
+      />
     </div>
   );
 }
