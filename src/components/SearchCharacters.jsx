@@ -2,7 +2,6 @@ import ReloadIcon from "../icons/ReloadIcon";
 import SearchIcon from "../icons/SearchIcon";
 import styles from "../styles/character-catalog.module.css";
 import Button from "./Button";
-import Input from "./Input";
 
 export default function SearchCharacters({ onChange, value, onClick, name }) {
   return (
@@ -10,7 +9,7 @@ export default function SearchCharacters({ onChange, value, onClick, name }) {
       <div className={styles["search-field"]}>
         <SearchIcon className={styles["search-icon"]} />
 
-        <Input
+        <input
           type={"text"}
           className={styles["input-search"]}
           placeholder={"Search by name or type..."}
