@@ -238,6 +238,37 @@
   background-color: #57cb60;
 }
 
+.btn-reset-filters {
+  position: relative;
+  padding: 10px 10px 10px 40px;
+  font-weight: 700;
+  font-size: 17px;
+  background: transparent;
+  border: 1px solid #6161617c;
+  border-radius: 7px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #57cb60;
+    outline: none;
+    box-shadow: 0 0 15px rgba(87, 203, 96, 0.5);
+  }
+
+  &:hover .icon-favorites {
+    color: #57cb60;
+  }
+}
+
+.icon-reset {
+  width: 18px;
+  color: #ffffff;
+  position: absolute;
+  left: 10px; /* расстояние от левого края инпута */
+  top: 50%; /* вертикальное центрирование */
+  transform: translateY(-50%); /* центрируем по вертикали */
+  pointer-events: none; /* чтобы клики шли на инпут */
+}
+
 .characters-catalog {
   max-width: 1560px;
   display: flex;
