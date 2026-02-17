@@ -8,6 +8,8 @@ import Button from "./components/Button";
 import ArrowLeftIcon from "./icons/ArrowLeftIcon";
 import ArrowRightIcon from "./icons/ArrowRightIcon";
 import ActiveCard from "./components/ActiveCard";
+import getCharacters from "./utils/getCharacters";
+import SortingFavoritesCharacters from "./components/SortingFavoritesCharacters";
 
 export default function RickMortyCharacterCatalog() {
   const [characters, setCharacters] = useState([]);
@@ -24,6 +26,11 @@ export default function RickMortyCharacterCatalog() {
   const [speciesFilter, setSpeciesFilter] = useState("All species");
   const [sorting, setSorting] = useState("Without sorting");
 
+  const [statusFavoritesFilter, setStatusFavoritesFilter] = useState("All status");
+  const [genderFavoritesFilter, setGenderFavoritesFilter] = useState("All gender");
+  const [speciesFavoritesFilter, setSpeciesFavoritesFilter] = useState("All species");
+  const [favoritesSorting, setFavoritesSorting] = useState("Without sorting");
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -32,48 +39,90 @@ export default function RickMortyCharacterCatalog() {
   }, [urlPage, activeCard]);
 
   useEffect(() => {
-    async function getCharacters() {
-      const urlPage1 = urlPage * 2 - 1;
-      const urlPage2 = urlPage * 2;
+    getCharacters(
+      urlPage,
+      name,
+      setCharacters,
+      setInfo,
+      setTotalPages,
+      statusFilter,
+      genderFilter,
+      speciesFilter,
+    );
+  }, [urlPage]);
 
-      const urls = [
-        `https://rickandmortyapi.com/api/character?page=${urlPage1}&name=${name}`,
-        `https://rickandmortyapi.com/api/character?page=${urlPage2}&name=${name}`,
-      ];
+  useEffect(() => {
+    const idTimeout = setTimeout(() => {
+      getCharacters(
+        urlPage,
+        name,
+        setCharacters,
+        setInfo,
+        setTotalPages,
+        statusFilter,
+        genderFilter,
+        speciesFilter,
+      );
+    }, 700);
 
-      const responses = await Promise.all(urls.map((url) => fetch(url)));
-      const data = await Promise.all(responses.map((res) => res.json()));
-      const allCharacters = data.flatMap((page) => (page.results ? page.results : []));
-      const allInfo = data[0].info;
+    return () => {
+      clearTimeout(idTimeout);
+    };
+  }, [name]);
 
-      setCharacters(allCharacters);
-      setInfo(allInfo);
-
-      setTotalPages(Math.ceil(allInfo?.count / 40));
-    }
-
-    getCharacters();
-  }, [urlPage, name]);
+  useEffect(() => {
+    getCharacters(
+      urlPage,
+      name,
+      setCharacters,
+      setInfo,
+      setTotalPages,
+      statusFilter,
+      genderFilter,
+      speciesFilter,
+    );
+  }, [statusFilter, genderFilter, speciesFilter]);
 
   const shownCharacters = isActive ? favoritesCharacters : characters;
 
-  const filteredCharacters = shownCharacters
+  const filteredCharacters = [...shownCharacters].sort((a, b) =>
+    sorting === "Without sorting"
+      ? 0
+      : sorting === "Name A-Z"
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name),
+  );
+
+  const filteredFavoriteCharacters = [...favoritesCharacters]
     .filter((char) =>
-      statusFilter === "All status" ? true : char.status === statusFilter,
+      statusFavoritesFilter === "All status"
+        ? true
+        : char.status === statusFavoritesFilter,
     )
     .filter((char) =>
-      genderFilter === "All gender" ? true : char.gender === genderFilter,
+      genderFavoritesFilter === "All gender"
+        ? true
+        : char.gender === genderFavoritesFilter,
     )
     .filter((char) =>
-      speciesFilter === "All species" ? true : char.species === speciesFilter,
+      speciesFavoritesFilter === "All species"
+        ? true
+        : char.species === speciesFavoritesFilter,
     )
     .sort((a, b) =>
-      sorting === "Without sorting"
+      favoritesSorting === "Without sorting"
         ? 0
-        : sorting === "Name A-Z"
+        : favoritesSorting === "Name A-Z"
           ? a.name.localeCompare(b.name)
           : b.name.localeCompare(a.name),
     );
+
+  const charactersToRender = isActive ? filteredFavoriteCharacters : filteredCharacters;
+
+  console.log(filteredFavoriteCharacters.length);
+  console.log(favoritesCharacters.length);
+
+  // console.log(filteredCharacters);
 
   function handleFavoriteClick(id) {
     const isFavorite = favoritesCharacters.some((favChar) => favChar.id === id);
@@ -116,6 +165,19 @@ export default function RickMortyCharacterCatalog() {
     setName(e.target.value);
   }
 
+  function handleResetFilters() {
+    setStatusFilter("");
+    setGenderFilter("");
+    setSpeciesFilter("");
+  }
+
+  function handleFavoritesResetFilters() {
+    setStatusFavoritesFilter("All status");
+    setGenderFavoritesFilter("All gender");
+    setSpeciesFavoritesFilter("All species");
+    setFavoritesSorting("Without sorting");
+  }
+
   function handleInputReset() {
     if (urlPage > 1) {
       setUrlPage(1);
@@ -145,6 +207,8 @@ export default function RickMortyCharacterCatalog() {
         }
       >
         <InfoCharacters
+          filteredFavoriteCharacters={filteredFavoriteCharacters}
+          isActive={isActive}
           characters={characters}
           favoritesCharacters={favoritesCharacters}
           styles={styles}
@@ -158,24 +222,39 @@ export default function RickMortyCharacterCatalog() {
           onClick={handleInputReset}
         />
 
-        <SortingCharacters
-          onClick={handleShowFavChar}
-          isActive={isActive}
-          characters={characters}
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-          genderFilter={genderFilter}
-          setGenderFilter={setGenderFilter}
-          speciesFilter={speciesFilter}
-          setSpeciesFilter={setSpeciesFilter}
-          sorting={sorting}
-          setSorting={setSorting}
-          favoritesCharacters={favoritesCharacters}
-        />
+        {isActive ? (
+          <SortingFavoritesCharacters
+            statusFavoritesFilter={statusFavoritesFilter}
+            setStatusFavoritesFilter={setStatusFavoritesFilter}
+            genderFavoritesFilter={genderFavoritesFilter}
+            setGenderFavoritesFilter={setGenderFavoritesFilter}
+            speciesFavoritesFilter={speciesFavoritesFilter}
+            setSpeciesFavoritesFilter={setSpeciesFavoritesFilter}
+            favoritesSorting={favoritesSorting}
+            setFavoritesSorting={setFavoritesSorting}
+            handleFavoritesResetFilters={handleFavoritesResetFilters}
+            handleShowFavChar={handleShowFavChar}
+          />
+        ) : (
+          <SortingCharacters
+            filteredFavoriteCharacters={filteredFavoriteCharacters}
+            handleResetFilters={handleResetFilters}
+            handleShowFavChar={handleShowFavChar}
+            isActive={isActive}
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+            genderFilter={genderFilter}
+            setGenderFilter={setGenderFilter}
+            speciesFilter={speciesFilter}
+            setSpeciesFilter={setSpeciesFilter}
+            sorting={sorting}
+            setSorting={setSorting}
+          />
+        )}
 
         <CharactersCard
           handleFavoriteClick={handleFavoriteClick}
-          characters={filteredCharacters}
+          characters={charactersToRender}
           favoritesCharacters={favoritesCharacters}
           handleActiveCard={handleActiveCard}
         />
