@@ -2,9 +2,9 @@ import styles from "../styles/character-catalog.module.css";
 import SelectItem from "./SelectItem";
 import StarIcon from "../icons/StarIcon";
 import Button from "./Button";
+import ReloadIcon from "../icons/ReloadIcon";
 
 export default function SortingCharacters({
-  characters,
   statusFilter,
   setStatusFilter,
   genderFilter,
@@ -13,22 +13,26 @@ export default function SortingCharacters({
   setSpeciesFilter,
   sorting,
   setSorting,
-  onClick,
+  handleShowFavChar,
   isActive,
+  handleResetFilters,
 }) {
-  const statusOptions = [
-    "All status",
-    ...Array.from(new Set(characters.map((character) => character.status))),
-  ];
+  const statusOptions = ["All status", "Alive", "Dead", "Unknown"];
 
-  const genderOptions = [
-    "All gender",
-    ...Array.from(new Set(characters.map((character) => character.gender))),
-  ];
+  const genderOptions = ["All gender", "Male", "Female", "Genderless", "Unknown"];
 
   const speciesOptions = [
     "All species",
-    ...Array.from(new Set(characters.map((character) => character.species))),
+    "Human",
+    "Alien",
+    "Humanoid",
+    "Poopybutthole",
+    "Mythological Creature",
+    "Animal",
+    "Robot",
+    "Cronenberg",
+    "Disease",
+    "Unknown",
   ];
 
   const sortingOptions = ["Without sorting", "Name A-Z", "Name Z-A"];
@@ -68,9 +72,18 @@ export default function SortingCharacters({
         btnClassName={isActive ? styles["btn-favorites-active"] : styles["btn-favorites"]}
         Icon={StarIcon}
         iconClassName={styles["icon-favorites"]}
-        onClick={onClick}
+        onClick={handleShowFavChar}
       >
         {isActive ? "Back to all" : "Favorites"}
+      </Button>
+
+      <Button
+        btnClassName={styles["btn-reset-filters"]}
+        Icon={ReloadIcon}
+        iconClassName={styles["icon-reset"]}
+        onClick={handleResetFilters}
+      >
+        Reset filters
       </Button>
     </div>
   );
