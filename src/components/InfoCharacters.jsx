@@ -3,15 +3,17 @@ import HumansIcon from "../icons/HumansIcon";
 import EyeIcon from "../icons/EyeIcon";
 import StarIcon from "../icons/StarIcon";
 import StatIcon from "../icons/StatIcon";
-import GetTopSpecies from "./GetTopSpecies";
+import getTopSpecies from "../utils/getTopSpecies";
 
 export default function InfoCharacters({
   characters,
   favoritesCharacters,
+  filteredFavoriteCharacters,
   styles,
   info,
+  isActive,
 }) {
-  const top3Label = GetTopSpecies(characters);
+  const top3Label = getTopSpecies(characters);
 
   return (
     <div className={styles["info-characters_container"]}>
@@ -19,14 +21,14 @@ export default function InfoCharacters({
         className={styles["all-info-characters"]}
         Icon={HumansIcon}
         total={"Total"}
-        label={info?.count}
+        label={isActive ? filteredFavoriteCharacters.length : info?.count}
       />
 
       <StatItem
         className={styles["all-info-characters"]}
         Icon={EyeIcon}
         total={"Shown"}
-        label={characters.length}
+        label={isActive ? filteredFavoriteCharacters.length : characters.length}
       />
 
       <StatItem
