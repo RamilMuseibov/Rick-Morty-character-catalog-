@@ -10,22 +10,26 @@ import ArrowRightIcon from "./icons/ArrowRightIcon";
 import ActiveCard from "./components/ActiveCard";
 import getCharacters from "./utils/getCharacters";
 import SortingFavoritesCharacters from "./components/SortingFavoritesCharacters";
+import SearchFavoritesCharacters from "./components/SearchFavoritesCharacters";
 
 export default function RickMortyCharacterCatalog() {
   const [characters, setCharacters] = useState([]);
   const [info, setInfo] = useState(null);
   const [favoritesCharacters, setFavoritesCharacters] = useState([]);
+
   const [totalPages, setTotalPages] = useState(0);
   const [urlPage, setUrlPage] = useState(1);
-  const [name, setName] = useState("");
+
   const [isActive, setIsActive] = useState(false);
   const [activeCard, setActiveCard] = useState(null);
 
+  const [name, setName] = useState("");
   const [statusFilter, setStatusFilter] = useState("All status");
   const [genderFilter, setGenderFilter] = useState("All gender");
   const [speciesFilter, setSpeciesFilter] = useState("All species");
   const [sorting, setSorting] = useState("Without sorting");
 
+  const [nameFavChar, setNameFavChar] = useState("");
   const [statusFavoritesFilter, setStatusFavoritesFilter] = useState("All status");
   const [genderFavoritesFilter, setGenderFavoritesFilter] = useState("All gender");
   const [speciesFavoritesFilter, setSpeciesFavoritesFilter] = useState("All species");
@@ -48,6 +52,7 @@ export default function RickMortyCharacterCatalog() {
       statusFilter,
       genderFilter,
       speciesFilter,
+      setUrlPage,
     );
   }, [urlPage]);
 
@@ -62,6 +67,7 @@ export default function RickMortyCharacterCatalog() {
         statusFilter,
         genderFilter,
         speciesFilter,
+        setUrlPage,
       );
     }, 700);
 
@@ -70,7 +76,11 @@ export default function RickMortyCharacterCatalog() {
     };
   }, [name]);
 
+  console.log(name);
+
   useEffect(() => {
+    setUrlPage(1);
+
     getCharacters(
       urlPage,
       name,
@@ -80,6 +90,7 @@ export default function RickMortyCharacterCatalog() {
       statusFilter,
       genderFilter,
       speciesFilter,
+      setUrlPage,
     );
   }, [statusFilter, genderFilter, speciesFilter]);
 
@@ -93,7 +104,10 @@ export default function RickMortyCharacterCatalog() {
         : b.name.localeCompare(a.name),
   );
 
+  "asd".toLowerCase;
+
   const filteredFavoriteCharacters = [...favoritesCharacters]
+    .filter((char) => char.name.toLowerCase().includes(nameFavChar.toLowerCase()))
     .filter((char) =>
       statusFavoritesFilter === "All status"
         ? true
@@ -118,11 +132,6 @@ export default function RickMortyCharacterCatalog() {
     );
 
   const charactersToRender = isActive ? filteredFavoriteCharacters : filteredCharacters;
-
-  console.log(filteredFavoriteCharacters.length);
-  console.log(favoritesCharacters.length);
-
-  // console.log(filteredCharacters);
 
   function handleFavoriteClick(id) {
     const isFavorite = favoritesCharacters.some((favChar) => favChar.id === id);
@@ -165,10 +174,18 @@ export default function RickMortyCharacterCatalog() {
     setName(e.target.value);
   }
 
+  function handleFavCharSearch(e) {
+    setNameFavChar(e.target.value);
+  }
+
   function handleResetFilters() {
-    setStatusFilter("");
-    setGenderFilter("");
-    setSpeciesFilter("");
+    if (urlPage > 1) {
+      setUrlPage(1);
+    }
+    setStatusFilter("All status");
+    setGenderFilter("All gender");
+    setSpeciesFilter("All species");
+    setSorting("Without sorting");
   }
 
   function handleFavoritesResetFilters() {
@@ -183,6 +200,7 @@ export default function RickMortyCharacterCatalog() {
       setUrlPage(1);
     }
     setName("");
+    setNameFavChar("");
   }
 
   function handleBtnNextChar() {
@@ -215,12 +233,21 @@ export default function RickMortyCharacterCatalog() {
           info={info}
         />
 
-        <SearchCharacters
-          name={name}
-          onChange={handleCharSearch}
-          value={name}
-          onClick={handleInputReset}
-        />
+        {isActive ? (
+          <SearchFavoritesCharacters
+            name={nameFavChar}
+            handleFavCharSearch={handleFavCharSearch}
+            value={nameFavChar}
+            handleInputReset={handleInputReset}
+          />
+        ) : (
+          <SearchCharacters
+            name={name}
+            handleCharSearch={handleCharSearch}
+            value={name}
+            handleInputReset={handleInputReset}
+          />
+        )}
 
         {isActive ? (
           <SortingFavoritesCharacters
