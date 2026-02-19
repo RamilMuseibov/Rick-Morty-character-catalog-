@@ -85,15 +85,6 @@ export default function SortingFavoritesCharacters({
       >
         Reset filters
       </Button>
-
-      <Button
-        btnClassName={styles["btn-reset-filters"]}
-        Icon={ReloadIcon}
-        iconClassName={styles["icon-reset"]}
-        onClick={handleFavoritesResetFilters}
-      >
-        Reset filters
-      </Button>
     </div>
   );
 }
