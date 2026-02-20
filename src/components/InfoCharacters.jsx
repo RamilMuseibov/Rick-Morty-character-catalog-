@@ -4,15 +4,16 @@ import EyeIcon from "../icons/EyeIcon";
 import StarIcon from "../icons/StarIcon";
 import StatIcon from "../icons/StatIcon";
 import getTopSpecies from "../utils/getTopSpecies";
+import { useCharacters } from "../store/characters";
 
 export default function InfoCharacters({
-  characters,
   favoritesCharacters,
   filteredFavoriteCharacters,
   styles,
   info,
   isActive,
 }) {
+  const characters = useCharacters((state) => state.characters);
   const top3Label = getTopSpecies(characters);
 
   return (
