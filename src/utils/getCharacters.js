@@ -12,8 +12,8 @@ export default async function getCharacters(
   const urlPage2 = urlPage * 2;
 
   const urls = [
-    `https://rickandmortyapi.com/api/character?page=${urlPage1}&name=${name}&status=${statusFilter === "All status" ? "" : statusFilter}&gender=${genderFilter === "All gender" ? "" : genderFilter}&species=${speciesFilter === "All species" ? "" : speciesFilter}`,
-    `https://rickandmortyapi.com/api/character?page=${urlPage2}&name=${name}&status=${statusFilter === "All status" ? "" : statusFilter}&gender=${genderFilter === "All gender" ? "" : genderFilter}&species=${speciesFilter === "All species" ? "" : speciesFilter}`,
+    `https://rickandmortyapi.com/api/character?page=${urlPage1}${name ? `&name=${name}` : ""}${statusFilter === "All status" ? "" : `&status=${statusFilter}`}${genderFilter === "All gender" ? "" : `&gender=${genderFilter}`}${speciesFilter === "All species" ? "" : `&species=${speciesFilter}`}`,
+    `https://rickandmortyapi.com/api/character?page=${urlPage2}${name ? `&name=${name}` : ""}${statusFilter === "All status" ? "" : `&status=${statusFilter}`}${genderFilter === "All gender" ? "" : `&gender=${genderFilter}`}${speciesFilter === "All species" ? "" : `&species=${speciesFilter}`}`,
   ];
 
   const responses = await Promise.all(urls.map((url) => fetch(url)));

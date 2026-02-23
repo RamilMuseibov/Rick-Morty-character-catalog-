@@ -5,3 +5,5 @@ export const useCharacters = create((set) => ({
 
   setCharacters: (characters) => set({ characters }),
 }));
+
+
