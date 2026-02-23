@@ -11,29 +11,80 @@ import ActiveCard from "./components/ActiveCard";
 import getCharacters from "./utils/getCharacters";
 import SortingFavoritesCharacters from "./components/SortingFavoritesCharacters";
 import SearchFavoritesCharacters from "./components/SearchFavoritesCharacters";
+import { useCharacters } from "./store/characters";
+import { useInfo } from "./store/info";
+import { usePagination } from "./store/pagination";
+import { useFavoriteCharacters } from "./store/favoritesCharacters";
+import { useActiveCard } from "./store/activeCard";
+import { useIsActive } from "./store/isActive";
+import { useAllCharacterFilters } from "./store/allCharacterFilters";
 
 export default function RickMortyCharacterCatalog() {
-  const [characters, setCharacters] = useState([]);
-  const [info, setInfo] = useState(null);
-  const [favoritesCharacters, setFavoritesCharacters] = useState([]);
+  const characters = useCharacters((state) => state.characters);
+  const setCharacters = useCharacters((state) => state.setCharacters);
 
-  const [totalPages, setTotalPages] = useState(0);
-  const [urlPage, setUrlPage] = useState(1);
+  const favoritesCharacters = useFavoriteCharacters((state) => state.favoritesCharacters);
+  const setFavoritesCharacters = useFavoriteCharacters(
+    (state) => state.setFavoritesCharacters,
+  );
 
-  const [isActive, setIsActive] = useState(false);
-  const [activeCard, setActiveCard] = useState(null);
+  const setInfo = useInfo((state) => state.setInfo);
 
-  const [name, setName] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All status");
-  const [genderFilter, setGenderFilter] = useState("All gender");
-  const [speciesFilter, setSpeciesFilter] = useState("All species");
-  const [sorting, setSorting] = useState("Without sorting");
+  const totalPages = usePagination((state) => state.totalPages);
+  const setTotalPages = usePagination((state) => state.setTotalPages);
 
-  const [nameFavChar, setNameFavChar] = useState("");
-  const [statusFavoritesFilter, setStatusFavoritesFilter] = useState("All status");
-  const [genderFavoritesFilter, setGenderFavoritesFilter] = useState("All gender");
-  const [speciesFavoritesFilter, setSpeciesFavoritesFilter] = useState("All species");
-  const [favoritesSorting, setFavoritesSorting] = useState("Without sorting");
+  const urlPage = usePagination((state) => state.urlPage);
+  const setUrlPage = usePagination((state) => state.setUrlPage);
+
+  const activeCard = useActiveCard((state) => state.activeCard);
+  const setActiveCard = useActiveCard((state) => state.setActiveCard);
+
+  const isActive = useIsActive((state) => state.isActive);
+  const setIsActive = useIsActive((state) => state.setIsActive);
+
+  const name = useAllCharacterFilters((state) => state.name);
+  const setName = useAllCharacterFilters((state) => state.setName);
+
+  const statusFilter = useAllCharacterFilters((state) => state.statusFilter);
+  const setStatusFilter = useAllCharacterFilters((state) => state.setStatusFilter);
+
+  const genderFilter = useAllCharacterFilters((state) => state.genderFilter);
+  const setGenderFilter = useAllCharacterFilters((state) => state.setGenderFilter);
+
+  const speciesFilter = useAllCharacterFilters((state) => state.speciesFilter);
+  const setSpeciesFilter = useAllCharacterFilters((state) => state.setSpeciesFilter);
+
+  const sorting = useAllCharacterFilters((state) => state.sorting);
+  const setSorting = useAllCharacterFilters((state) => state.setSorting);
+
+  const nameFavChar = useAllCharacterFilters((state) => state.nameFavChar);
+  const setNameFavChar = useAllCharacterFilters((state) => state.setNameFavChar);
+
+  const statusFavoritesFilter = useAllCharacterFilters(
+    (state) => state.statusFavoritesFilter,
+  );
+  const setStatusFavoritesFilter = useAllCharacterFilters(
+    (state) => state.setStatusFavoritesFilter,
+  );
+
+  const genderFavoritesFilter = useAllCharacterFilters(
+    (state) => state.genderFavoritesFilter,
+  );
+  const setGenderFavoritesFilter = useAllCharacterFilters(
+    (state) => state.setGenderFavoritesFilter,
+  );
+
+  const speciesFavoritesFilter = useAllCharacterFilters(
+    (state) => state.speciesFavoritesFilter,
+  );
+  const setSpeciesFavoritesFilter = useAllCharacterFilters(
+    (state) => state.setSpeciesFavoritesFilter,
+  );
+
+  const favoritesSorting = useAllCharacterFilters((state) => state.favoritesSorting);
+  const setFavoritesSorting = useAllCharacterFilters(
+    (state) => state.setFavoritesSorting,
+  );
 
   useEffect(() => {
     window.scrollTo({
@@ -96,7 +147,7 @@ export default function RickMortyCharacterCatalog() {
 
   const shownCharacters = isActive ? favoritesCharacters : characters;
 
-  const filteredCharacters = [...shownCharacters].sort((a, b) =>
+  const filteredCharacters = shownCharacters.toSorted((a, b) =>
     sorting === "Without sorting"
       ? 0
       : sorting === "Name A-Z"
@@ -104,9 +155,7 @@ export default function RickMortyCharacterCatalog() {
         : b.name.localeCompare(a.name),
   );
 
-  "asd".toLowerCase;
-
-  const filteredFavoriteCharacters = [...favoritesCharacters]
+  const filteredFavoriteCharacters = favoritesCharacters
     .filter((char) => char.name.toLowerCase().includes(nameFavChar.toLowerCase()))
     .filter((char) =>
       statusFavoritesFilter === "All status"
@@ -226,39 +275,23 @@ export default function RickMortyCharacterCatalog() {
       >
         <InfoCharacters
           filteredFavoriteCharacters={filteredFavoriteCharacters}
-          isActive={isActive}
-          characters={characters}
-          favoritesCharacters={favoritesCharacters}
           styles={styles}
-          info={info}
         />
 
         {isActive ? (
           <SearchFavoritesCharacters
-            name={nameFavChar}
             handleFavCharSearch={handleFavCharSearch}
-            value={nameFavChar}
             handleInputReset={handleInputReset}
           />
         ) : (
           <SearchCharacters
-            name={name}
             handleCharSearch={handleCharSearch}
-            value={name}
             handleInputReset={handleInputReset}
           />
         )}
 
         {isActive ? (
           <SortingFavoritesCharacters
-            statusFavoritesFilter={statusFavoritesFilter}
-            setStatusFavoritesFilter={setStatusFavoritesFilter}
-            genderFavoritesFilter={genderFavoritesFilter}
-            setGenderFavoritesFilter={setGenderFavoritesFilter}
-            speciesFavoritesFilter={speciesFavoritesFilter}
-            setSpeciesFavoritesFilter={setSpeciesFavoritesFilter}
-            favoritesSorting={favoritesSorting}
-            setFavoritesSorting={setFavoritesSorting}
             handleFavoritesResetFilters={handleFavoritesResetFilters}
             handleShowFavChar={handleShowFavChar}
           />
@@ -267,22 +300,12 @@ export default function RickMortyCharacterCatalog() {
             filteredFavoriteCharacters={filteredFavoriteCharacters}
             handleResetFilters={handleResetFilters}
             handleShowFavChar={handleShowFavChar}
-            isActive={isActive}
-            statusFilter={statusFilter}
-            setStatusFilter={setStatusFilter}
-            genderFilter={genderFilter}
-            setGenderFilter={setGenderFilter}
-            speciesFilter={speciesFilter}
-            setSpeciesFilter={setSpeciesFilter}
-            sorting={sorting}
-            setSorting={setSorting}
           />
         )}
 
         <CharactersCard
           handleFavoriteClick={handleFavoriteClick}
           characters={charactersToRender}
-          favoritesCharacters={favoritesCharacters}
           handleActiveCard={handleActiveCard}
         />
       </main>
