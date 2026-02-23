@@ -1,14 +1,12 @@
 import ReloadIcon from "../icons/ReloadIcon";
 import SearchIcon from "../icons/SearchIcon";
+import { useAllCharacterFilters } from "../store/allCharacterFilters";
 import styles from "../styles/character-catalog.module.css";
 import Button from "./Button";
 
-export default function SearchCharacters({
-  handleCharSearch,
-  value,
-  handleInputReset,
-  name,
-}) {
+export default function SearchCharacters({ handleCharSearch, handleInputReset }) {
+  const name = useAllCharacterFilters((state) => state.name);
+
   return (
     <div className={styles["search-container"]}>
       <div className={styles["search-field"]}>
@@ -18,7 +16,7 @@ export default function SearchCharacters({
           type={"text"}
           className={styles["input-search"]}
           placeholder={"Search by name or type..."}
-          value={value}
+          value={name}
           onChange={handleCharSearch}
         />
       </div>

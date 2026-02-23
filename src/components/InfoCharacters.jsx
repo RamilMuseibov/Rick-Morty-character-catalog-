@@ -5,15 +5,16 @@ import StarIcon from "../icons/StarIcon";
 import StatIcon from "../icons/StatIcon";
 import getTopSpecies from "../utils/getTopSpecies";
 import { useCharacters } from "../store/characters";
+import { useInfo } from "../store/info";
+import { useFavoriteCharacters } from "../store/favoritesCharacters";
+import { useIsActive } from "../store/isActive";
 
-export default function InfoCharacters({
-  favoritesCharacters,
-  filteredFavoriteCharacters,
-  styles,
-  info,
-  isActive,
-}) {
+export default function InfoCharacters({ filteredFavoriteCharacters, styles }) {
   const characters = useCharacters((state) => state.characters);
+  const info = useInfo((state) => state.info);
+  const favoritesCharacters = useFavoriteCharacters((state) => state.favoritesCharacters);
+  const isActive = useIsActive((state) => state.isActive);
+
   const top3Label = getTopSpecies(characters);
 
   return (

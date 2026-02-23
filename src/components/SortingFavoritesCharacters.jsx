@@ -3,24 +3,40 @@ import SelectItem from "./SelectItem";
 import StarIcon from "../icons/StarIcon";
 import Button from "./Button";
 import ReloadIcon from "../icons/ReloadIcon";
+import { useAllCharacterFilters } from "../store/allCharacterFilters";
 
 export default function SortingFavoritesCharacters({
-  statusFavoritesFilter,
-  setStatusFavoritesFilter,
-  genderFavoritesFilter,
-  setGenderFavoritesFilter,
-  speciesFavoritesFilter,
-  setSpeciesFavoritesFilter,
-  favoritesSorting,
-  setFavoritesSorting,
   handleShowFavChar,
-  isActive,
   handleFavoritesResetFilters,
 }) {
+  const statusFavoritesFilter = useAllCharacterFilters(
+    (state) => state.statusFavoritesFilter,
+  );
+  const setStatusFavoritesFilter = useAllCharacterFilters(
+    (state) => state.setStatusFavoritesFilter,
+  );
+
+  const genderFavoritesFilter = useAllCharacterFilters(
+    (state) => state.genderFavoritesFilter,
+  );
+  const setGenderFavoritesFilter = useAllCharacterFilters(
+    (state) => state.setGenderFavoritesFilter,
+  );
+
+  const speciesFavoritesFilter = useAllCharacterFilters(
+    (state) => state.speciesFavoritesFilter,
+  );
+  const setSpeciesFavoritesFilter = useAllCharacterFilters(
+    (state) => state.setSpeciesFavoritesFilter,
+  );
+
+  const favoritesSorting = useAllCharacterFilters((state) => state.favoritesSorting);
+  const setFavoritesSorting = useAllCharacterFilters(
+    (state) => state.setFavoritesSorting,
+  );
+
   const statusOptions = ["All status", "Alive", "Dead", "unknown"];
-
   const genderOptions = ["All gender", "Male", "Female", "Genderless", "unknown"];
-
   const speciesOptions = [
     "All species",
     "Human",
@@ -34,7 +50,6 @@ export default function SortingFavoritesCharacters({
     "Disease",
     "unknown",
   ];
-
   const sortingOptions = ["Without sorting", "Name A-Z", "Name Z-A"];
 
   return (

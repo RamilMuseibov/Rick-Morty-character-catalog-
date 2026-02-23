@@ -1,14 +1,15 @@
 import ReloadIcon from "../icons/ReloadIcon";
 import SearchIcon from "../icons/SearchIcon";
+import { useAllCharacterFilters } from "../store/allCharacterFilters";
 import styles from "../styles/character-catalog.module.css";
 import Button from "./Button";
 
 export default function SearchFavoritesCharacters({
   handleFavCharSearch,
-  value,
   handleInputReset,
-  name,
 }) {
+  const nameFavChar = useAllCharacterFilters((state) => state.nameFavChar);
+
   return (
     <div className={styles["search-container"]}>
       <div className={styles["search-field"]}>
@@ -18,14 +19,16 @@ export default function SearchFavoritesCharacters({
           type={"text"}
           className={styles["input-search"]}
           placeholder={"Search by name or type..."}
-          value={value}
+          value={nameFavChar}
           onChange={handleFavCharSearch}
         />
       </div>
 
       <Button
-        disabled={name === "" ? true : false}
-        btnClassName={name === "" ? styles["reset-btn-disabled"] : styles["reset-btn"]}
+        disabled={nameFavChar === "" ? true : false}
+        btnClassName={
+          nameFavChar === "" ? styles["reset-btn-disabled"] : styles["reset-btn"]
+        }
         Icon={ReloadIcon}
         onClick={handleInputReset}
       />

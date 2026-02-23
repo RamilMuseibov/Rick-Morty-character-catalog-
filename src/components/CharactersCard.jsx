@@ -1,13 +1,15 @@
 import styles from "../styles/character-catalog.module.css";
 import StarIcon from "../icons/StarIcon";
 import Button from "./Button";
+import { useFavoriteCharacters } from "../store/favoritesCharacters";
 
 export default function CharactersCard({
   characters,
   handleFavoriteClick,
-  favoritesCharacters,
   handleActiveCard,
 }) {
+  const favoritesCharacters = useFavoriteCharacters((state) => state.favoritesCharacters);
+
   return (
     <div className={styles["characters-catalog"]}>
       {characters.length === 0 ? (
