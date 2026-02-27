@@ -6,7 +6,7 @@ import ReloadIcon from "../icons/ReloadIcon";
 import { useIsActive } from "../store/isActive";
 import { useCharacters } from "../store/characters";
 
-export default function SortingCharacters({ handleShowFavChar }) {
+export default function SortingCharacters() {
   function handleResetFilters() {
     if (urlPage > 1) {
       setUrlPage(1);
