@@ -4,22 +4,24 @@ import StarIcon from "../icons/StarIcon";
 import Button from "./Button";
 import ReloadIcon from "../icons/ReloadIcon";
 import { useIsActive } from "../store/isActive";
-import { useAllCharacterFilters } from "../store/allCharacterFilters";
+import { useCharacters } from "../store/characters";
 
-export default function SortingCharacters({ handleShowFavChar, handleResetFilters }) {
-  const statusFilter = useAllCharacterFilters((state) => state.statusFilter);
-  const setStatusFilter = useAllCharacterFilters((state) => state.setStatusFilter);
-
-  const genderFilter = useAllCharacterFilters((state) => state.genderFilter);
-  const setGenderFilter = useAllCharacterFilters((state) => state.setGenderFilter);
-
-  const speciesFilter = useAllCharacterFilters((state) => state.speciesFilter);
-  const setSpeciesFilter = useAllCharacterFilters((state) => state.setSpeciesFilter);
-
-  const sorting = useAllCharacterFilters((state) => state.sorting);
-  const setSorting = useAllCharacterFilters((state) => state.setSorting);
-
+export default function SortingCharacters({ handleShowFavChar }) {
+  function handleResetFilters() {
+    if (urlPage > 1) {
+      setUrlPage(1);
+    }
+    setFilter("status", "All status");
+    setFilter("gender", "All gender");
+    setFilter("species", "All species");
+    setFilter("sorting", "Without sorting");
+  }
+  const { status, gender, species, sorting } = useCharacters((state) => state.filters);
+  const setFilter = useCharacters((state) => state.setFilter);
+  const urlPage = useCharacters((state) => state.urlPage);
+  const setUrlPage = useCharacters((state) => state.setUrlPage);
   const isActive = useIsActive((state) => state.isActive);
+  const setIsActive = useIsActive((state) => state.setIsActive);
 
   const statusOptions = ["All status", "Alive", "Dead", "Unknown"];
   const genderOptions = ["All gender", "Male", "Female", "Genderless", "Unknown"];
@@ -44,36 +46,42 @@ export default function SortingCharacters({ handleShowFavChar, handleResetFilter
         id={1}
         className={styles["select_sorting-characters"]}
         options={statusOptions}
-        value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
+        value={status}
+        onChange={(e) => setFilter("status", e.target.value)}
       />
       <SelectItem
         id={2}
         className={styles["select_sorting-characters"]}
         options={genderOptions}
-        value={genderFilter}
-        onChange={(e) => setGenderFilter(e.target.value)}
+        value={gender}
+        onChange={(e) => setFilter("gender", e.target.value)}
       />
       <SelectItem
         id={3}
         className={styles["select_sorting-characters"]}
         options={speciesOptions}
-        value={speciesFilter}
-        onChange={(e) => setSpeciesFilter(e.target.value)}
+        value={species}
+        onChange={(e) => setFilter("species", e.target.value)}
       />
       <SelectItem
         id={4}
         className={styles["select_sorting-characters"]}
         options={sortingOptions}
         value={sorting}
-        onChange={(e) => setSorting(e.target.value)}
+        onChange={(e) => setFilter("sorting", e.target.value)}
       />
 
       <Button
         btnClassName={isActive ? styles["btn-favorites-active"] : styles["btn-favorites"]}
         Icon={StarIcon}
         iconClassName={styles["icon-favorites"]}
-        onClick={handleShowFavChar}
+        onClick={() => {
+          if (!isActive) {
+            setIsActive(true);
+            return;
+          }
+          setIsActive(false);
+        }}
       >
         {isActive ? "Back to all" : "Favorites"}
       </Button>

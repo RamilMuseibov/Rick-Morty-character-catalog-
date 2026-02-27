@@ -3,37 +3,23 @@ import SelectItem from "./SelectItem";
 import StarIcon from "../icons/StarIcon";
 import Button from "./Button";
 import ReloadIcon from "../icons/ReloadIcon";
-import { useAllCharacterFilters } from "../store/allCharacterFilters";
+import { useFavCharacterFilters } from "../store/favCharacterFilters";
+import { useIsActive } from "../store/isActive";
 
-export default function SortingFavoritesCharacters({
-  handleShowFavChar,
-  handleFavoritesResetFilters,
-}) {
-  const statusFavoritesFilter = useAllCharacterFilters(
-    (state) => state.statusFavoritesFilter,
-  );
-  const setStatusFavoritesFilter = useAllCharacterFilters(
-    (state) => state.setStatusFavoritesFilter,
-  );
+export default function SortingFavoritesCharacters() {
+  function handleFavoritesResetFilters() {
+    setFavCharFilter("favCharStatus", "All status");
+    setFavCharFilter("favCharGender", "All gender");
+    setFavCharFilter("favCharSpecies", "All species");
+    setFavCharFilter("favCharSorting", "Without sorting");
+  }
 
-  const genderFavoritesFilter = useAllCharacterFilters(
-    (state) => state.genderFavoritesFilter,
-  );
-  const setGenderFavoritesFilter = useAllCharacterFilters(
-    (state) => state.setGenderFavoritesFilter,
-  );
+  const isActive = useIsActive((state) => state.isActive);
+  const setIsActive = useIsActive((state) => state.setIsActive);
 
-  const speciesFavoritesFilter = useAllCharacterFilters(
-    (state) => state.speciesFavoritesFilter,
-  );
-  const setSpeciesFavoritesFilter = useAllCharacterFilters(
-    (state) => state.setSpeciesFavoritesFilter,
-  );
-
-  const favoritesSorting = useAllCharacterFilters((state) => state.favoritesSorting);
-  const setFavoritesSorting = useAllCharacterFilters(
-    (state) => state.setFavoritesSorting,
-  );
+  const { favCharStatus, favCharGender, favCharSpecies, favCharSorting } =
+    useFavCharacterFilters((state) => state.favCharFilters);
+  const setFavCharFilter = useFavCharacterFilters((state) => state.setFavCharFilter);
 
   const statusOptions = ["All status", "Alive", "Dead", "unknown"];
   const genderOptions = ["All gender", "Male", "Female", "Genderless", "unknown"];
@@ -58,36 +44,42 @@ export default function SortingFavoritesCharacters({
         id={1}
         className={styles["select_sorting-characters"]}
         options={statusOptions}
-        value={statusFavoritesFilter}
-        onChange={(e) => setStatusFavoritesFilter(e.target.value)}
+        value={favCharStatus}
+        onChange={(e) => setFavCharFilter("favCharStatus", e.target.value)}
       />
       <SelectItem
         id={2}
         className={styles["select_sorting-characters"]}
         options={genderOptions}
-        value={genderFavoritesFilter}
-        onChange={(e) => setGenderFavoritesFilter(e.target.value)}
+        value={favCharGender}
+        onChange={(e) => setFavCharFilter("favCharGender", e.target.value)}
       />
       <SelectItem
         id={3}
         className={styles["select_sorting-characters"]}
         options={speciesOptions}
-        value={speciesFavoritesFilter}
-        onChange={(e) => setSpeciesFavoritesFilter(e.target.value)}
+        value={favCharSpecies}
+        onChange={(e) => setFavCharFilter("favCharSpecies", e.target.value)}
       />
       <SelectItem
         id={4}
         className={styles["select_sorting-characters"]}
         options={sortingOptions}
-        value={favoritesSorting}
-        onChange={(e) => setFavoritesSorting(e.target.value)}
+        value={favCharSorting}
+        onChange={(e) => setFavCharFilter("favCharSorting", e.target.value)}
       />
 
       <Button
         btnClassName={styles["btn-favorites-active"]}
         Icon={StarIcon}
         iconClassName={styles["icon-favorites"]}
-        onClick={handleShowFavChar}
+        onClick={() => {
+          if (!isActive) {
+            setIsActive(true);
+            return;
+          }
+          setIsActive(false);
+        }}
       >
         Back to all
       </Button>

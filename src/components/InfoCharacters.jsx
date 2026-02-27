@@ -11,7 +11,7 @@ import { useIsActive } from "../store/isActive";
 
 export default function InfoCharacters({ filteredFavoriteCharacters, styles }) {
   const characters = useCharacters((state) => state.characters);
-  const info = useInfo((state) => state.info);
+  const info = useCharacters((state) => state.info);
   const favoritesCharacters = useFavoriteCharacters((state) => state.favoritesCharacters);
   const isActive = useIsActive((state) => state.isActive);
 
