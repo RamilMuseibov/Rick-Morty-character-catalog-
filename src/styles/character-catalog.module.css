@@ -269,7 +269,7 @@
   pointer-events: none; /* чтобы клики шли на инпут */
 }
 
-.characters-catalog {
+.characters-list {
   max-width: 1560px;
   display: flex;
   gap: 1rem;
