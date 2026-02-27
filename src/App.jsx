@@ -123,14 +123,6 @@ export default function RickMortyCharacterCatalog() {
     }
   }
 
-  function handleShowFavChar() {
-    if (!isActive) {
-      setIsActive(true);
-      return;
-    }
-    setIsActive(false);
-  }
-
   return (
     <div className={styles[`app_character-catalog`]}>
       <header className={styles["app_header"]}>
@@ -154,10 +146,7 @@ export default function RickMortyCharacterCatalog() {
         {isActive ? (
           <SortingFavoritesCharacters />
         ) : (
-          <SortingCharacters
-            filteredFavoriteCharacters={filteredFavoriteCharacters}
-            handleShowFavChar={handleShowFavChar}
-          />
+          <SortingCharacters filteredFavoriteCharacters={filteredFavoriteCharacters} />
         )}
 
         <CharactersList
